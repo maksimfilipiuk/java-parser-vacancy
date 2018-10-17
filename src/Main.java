@@ -33,6 +33,18 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter job title: ");
         String vacancy = in.nextLine();
+
+        if(vacancy.contains("#")){
+            vacancy = vacancy.replace("#", "%23");
+        }
+        /*
+        else if(vacancy.contains("+")) {
+            vacancy = vacancy.replace("+", "%2B");
+        }
+        НЕ ВАРИАНТ ИСПРАВЛЕНИЯ ОШИБКИ СИМВОЛА "+"!!!
+        */
+        vacancy = vacancy.replace(" ", "+");
+
         System.out.print("Enter the number of pages: ");
         Integer countPages = in.nextInt() + 1;
 
@@ -44,9 +56,8 @@ public class Main {
 
         while(page < countPages) {
             logfile.write("\tСтраница - " + page + "\n");
-            Document workua = Jsoup.connect("https://work.ua/jobs-"
-                    + vacancy.replace(" ", "+")
-                    + "/?page=" + page
+            Document workua = Jsoup.connect(
+                    "https://work.ua/jobs-" + vacancy + "/?page=" + page
             ).get();
 
             logfile.write(workua.title() + "\n");
